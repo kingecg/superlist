@@ -12,5 +12,11 @@ class HomePageTest(TestCase):
         request= HttpRequest()
         response = home_page(request)
         self.assertEqual(response.content.decode(), render_to_string("home.html"))
-
+    def test_homepage_can_process_post_request(self):
+        request = HttpRequest()
+        request.method = "POST"
+        posttext = 'By some thing'
+        request.POST['item_text'] = posttext
+        response = home_page(request)
+        self.assertIn(posttext,response.content.decode())
 # Create your tests here.
